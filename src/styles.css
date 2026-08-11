@@ -1,0 +1,146 @@
+:root {
+  --bg: #000;
+  --dim: #3f3f3f;
+  --on-bg: #f3f3f1;
+  --on-fg: #4a4a4a;
+  /* 14줄 + 하이라이트 블록 여백까지 한 화면에 떨어지도록 잡은 상한 */
+  --size: clamp(28px, min(6.9vw, 5.35vh), 90px);
+  --leading: 1.27;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  cursor: url("../assets/soft-coding-cursor.svg") 63 45, auto;
+}
+
+html {
+  scrollbar-color: #dedede #000;
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar {
+  width: 13px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #000;
+}
+
+html::-webkit-scrollbar-thumb {
+  min-height: 72px;
+  border: 3px solid #000;
+  border-radius: 999px;
+  background: #dedede;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+  color: var(--dim);
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo",
+    -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: geometricPrecision;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.story {
+  height: 815vh;
+  outline: none;
+}
+
+.story:focus-visible .poster {
+  outline: 1px solid #585858;
+  outline-offset: -1px;
+}
+
+.poster {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100dvh;
+  min-height: 480px;
+  align-items: flex-start;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.list {
+  width: 100%;
+  margin: 0;
+  padding: clamp(8px, 1.3vh, 18px) 16px 0 0;
+  list-style: none;
+  font-size: var(--size);
+  font-weight: 400;
+  line-height: var(--leading);
+  letter-spacing: -0.045em;
+}
+
+.line {
+  display: block;
+  width: fit-content;
+  max-width: calc(100vw - 18px);
+  white-space: nowrap;
+}
+
+.hit {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: url("../assets/soft-coding-cursor.svg") 63 45, pointer;
+}
+
+.hit:focus {
+  outline: none;
+}
+
+.mark {
+  display: inline-block;
+  padding: 0 0.08em 0.03em;
+  color: var(--dim);
+  line-height: var(--leading);
+  transition: color 150ms linear, background-color 150ms linear;
+}
+
+.is-on .mark {
+  color: var(--on-fg);
+  background: var(--on-bg);
+}
+
+@media (max-height: 650px) {
+  :root {
+    --size: clamp(21px, 4.3vh, 29px);
+    --leading: 1.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    transition: none;
+  }
+}
