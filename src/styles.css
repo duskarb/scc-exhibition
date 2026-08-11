@@ -1,11 +1,15 @@
 :root {
-  --bg: #000;
-  --dim: #3f3f3f;
-  --on-bg: #f3f3f1;
-  --on-fg: #4a4a4a;
-  /* 14줄 + 하이라이트 블록 여백까지 한 화면에 떨어지도록 잡은 상한 */
-  --size: clamp(28px, min(6.9vw, 5.35vh), 90px);
-  --leading: 1.27;
+  color-scheme: dark;
+  font-family: Arial, Helvetica, "Helvetica Neue", sans-serif;
+  background: #000;
+  color: #f5f5f5;
+  font-synthesis: none;
+  --page-pad: clamp(1.25rem, 2.95vw, 2rem);
+  --display-size: clamp(1.675rem, 4.125vw, 2.775rem);
+  --display-tracking: -0.064em;
+  --wordmark-tracking: -0.055em;
+  --display-leading: 1.05;
+  --line-step: 1.305em;
 }
 
 * {
@@ -13,134 +17,180 @@
 }
 
 html,
-body {
+body,
+#root {
   margin: 0;
+  min-width: 320px;
   min-height: 100%;
-  background: var(--bg);
-  cursor: url("../assets/soft-coding-cursor.svg") 63 45, auto;
-}
-
-html {
-  scrollbar-color: #dedede #000;
-  scrollbar-width: thin;
-}
-
-html::-webkit-scrollbar {
-  width: 13px;
-}
-
-html::-webkit-scrollbar-track {
   background: #000;
 }
 
-html::-webkit-scrollbar-thumb {
-  min-height: 72px;
-  border: 3px solid #000;
-  border-radius: 999px;
-  background: #dedede;
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  min-width: 320px;
+  min-height: 100vh;
   overflow-x: hidden;
-  color: var(--dim);
-  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo",
-    -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
   text-rendering: geometricPrecision;
+}
+
+.poster {
+  position: relative;
+  min-height: max(100svh, 50rem);
+  overflow: hidden;
+  background: #000;
+  padding: clamp(2.65rem, 4.35vh, 3.7rem) 0 clamp(2rem, 3.1vh, 2.7rem);
+  cursor: pointer;
 }
 
 .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
-  margin: -1px;
   padding: 0;
+  margin: -1px;
   overflow: hidden;
-  clip-path: inset(50%);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+  border: 0;
 }
 
-.story {
-  height: 815vh;
-  outline: none;
+.word-field {
+  display: grid;
+  gap: 0;
 }
 
-.story:focus-visible .poster {
-  outline: 1px solid #585858;
-  outline-offset: -1px;
+.marquee {
+  width: 100%;
+  font-size: var(--display-size);
+  height: var(--line-step);
+  overflow: hidden;
 }
 
-.poster {
-  position: sticky;
-  top: 0;
+.marquee__track {
   display: flex;
-  height: 100dvh;
-  min-height: 480px;
   align-items: flex-start;
-  overflow: hidden;
-  background: var(--bg);
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+  padding-left: var(--page-pad);
 }
 
-.list {
-  width: 100%;
-  margin: 0;
-  padding: clamp(8px, 1.3vh, 18px) 16px 0 0;
-  list-style: none;
-  font-size: var(--size);
-  font-weight: 400;
-  line-height: var(--leading);
-  letter-spacing: -0.045em;
+.marquee__loop {
+  display: flex;
+  flex: none;
 }
 
-.line {
-  display: block;
-  width: fit-content;
-  max-width: calc(100vw - 18px);
+.marquee__segment {
+  display: flex;
+  flex: none;
+}
+
+.marquee__word {
+  flex: none;
+  color: #3d3d3d;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking);
   white-space: nowrap;
+  transition: color 120ms linear;
 }
 
-.hit {
-  display: block;
-  width: 100%;
+.marquee__word::after {
+  content: "\00a0";
+}
+
+.marquee__word.is-leading {
+  color: #f6f6f6;
+}
+
+.exhibition-info {
+  position: relative;
+  z-index: 1;
+  padding-inline: var(--page-pad);
+}
+
+.exhibition-info p {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: var(--display-size);
+  font-weight: 700;
+  line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking);
+  white-space: nowrap;
+  height: var(--line-step);
+}
+
+.artists {
+  margin-top: 0;
+}
+
+.wordmark {
+  position: absolute;
+  left: var(--page-pad);
+  bottom: clamp(1.75rem, 3.15vh, 2.7rem);
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
+  background: transparent;
+  color: #f5f5f5;
+  font-family: inherit;
+  font-size: clamp(0.39rem, 0.925vw, 0.64rem);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: var(--wordmark-tracking);
   text-align: left;
-  cursor: url("../assets/soft-coding-cursor.svg") 63 45, pointer;
+  cursor: pointer;
+  transition: opacity 120ms linear;
 }
 
-.hit:focus {
-  outline: none;
+.wordmark:hover {
+  opacity: 0.68;
 }
 
-.mark {
-  display: inline-block;
-  padding: 0 0.08em 0.03em;
-  color: var(--dim);
-  line-height: var(--leading);
-  transition: color 150ms linear, background-color 150ms linear;
+.wordmark:focus-visible {
+  outline: 2px solid #f5f5f5;
+  outline-offset: 0.35rem;
 }
 
-.is-on .mark {
-  color: var(--on-fg);
-  background: var(--on-bg);
+.marquee__word,
+.exhibition-info p,
+.wordmark {
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-feature-settings: "kern" 0, "liga" 0;
+  font-optical-sizing: none;
 }
 
-@media (max-height: 650px) {
+@media (max-width: 700px) {
   :root {
-    --size: clamp(21px, 4.3vh, 29px);
-    --leading: 1.3;
+    --display-size: clamp(1.4rem, 6.2vw, 2.4rem);
+    --page-pad: clamp(1rem, 4.4vw, 1.5rem);
   }
+
+  .poster {
+    min-height: max(100svh, 43rem);
+    padding-top: clamp(2rem, 5.4vh, 3rem);
+  }
+
+  .exhibition-info p {
+    font-size: var(--display-size);
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mark {
+  .marquee__track {
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .marquee__word {
     transition: none;
   }
 }

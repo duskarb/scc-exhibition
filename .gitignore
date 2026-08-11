@@ -3,8 +3,7 @@ dist/
 .DS_Store
 .claude/
 AGENTS.md
-
-# Local visual QA evidence
+design-qa.md
 implementation-*.png
 qa-*.png
-design-qa.md
+*.log
